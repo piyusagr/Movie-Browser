@@ -1,23 +1,29 @@
-import logo from './logo.svg';
-import './App.css';
 
+import './App.css';
+import { useEffect } from 'react';
+import Navbar from './components/navbar';
+import Home from './components/home';
+import Aboutview from './components/About';
+import SearchView from './components/Search';
+import { Switch, Route } from 'react-router-dom';
+import { useState } from 'react';
 function App() {
+  const [searchResults, setSearchResults] = useState([]);
+  const [searchText, setSearchText] = useState('');
+
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <Navbar searchText={searchText} setSearchResults={setSearchResults}/>
+      <Switch>
+        <Route path="/" exact>
+          <Home />
+        </Route>
+        <Route path="/about" component={Aboutview} />
+        <Route path="/search">
+          <SearchView keyword={searchText} searchResults={searchResults} />
+        </Route>
+      </Switch>
     </div>
   );
 }
